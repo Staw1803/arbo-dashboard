@@ -122,9 +122,11 @@
 
     <script>
 // 1. INICIALIZA A CONEXÃO COM A NUVEM
-const supabaseUrl = 'https://zbnpwicdgobxkvesgayr.supabase.co'; // Ex: https://xyz.supabase.co
-const supabaseKey = 'sb_publishable_Bw_NeyC1z_bHKnKOYjns0w_wAiAw5Lc'; // A sua chave pública segura
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = 'COLE_AQUI_A_SUA_URL_DO_SUPABASE'; // Ex: https://xyz.supabase.co
+const supabaseKey = 'sb_publishable_Bw_NeyC1z_bHKnKOYjns0w_wAiAw5Lc';
+
+// CORREÇÃO: O nome da variável mudou para 'bancoDeDados' para não bugar o sistema
+const bancoDeDados = supabase.createClient(supabaseUrl, supabaseKey);
 
 // ESTADO ZERO: Começa vazio aguardando dados reais
 let frotaDispositivos = []; 
@@ -162,29 +164,36 @@ async function gerarTokenMatrix() {
             tokenInput.style.backgroundColor = "rgba(34, 197, 94, 0.2)";
             setTimeout(() => tokenInput.style.backgroundColor = "", 200);
 
-            // ---> A MÁGICA: ENVIANDO PARA O SEU SUPABASE <---
-            const { data, error } = await supabase
-                .from('empresas')
-                .insert([
-                    { nome: empresaInput.value, token_acesso: finalToken }
-                ]);
+            try {
+                // ---> A MÁGICA: ENVIANDO PARA O SEU SUPABASE <---
+                const { data, error } = await bancoDeDados
+                    .from('empresas')
+                    .insert([
+                        { nome: empresaInput.value, token_acesso: finalToken }
+                    ]);
 
-            if (error) {
-                console.error("Erro do Supabase:", error);
-                alert("Erro ao salvar! Aperte F12 e veja o Console para detalhes.");
+                if (error) {
+                    console.error("Erro do Supabase:", error);
+                    alert("Erro do banco de dados! Aperte F12 e veja o Console.");
+                    btnGerar.disabled = false;
+                    btnGerar.innerText = "TENTAR NOVAMENTE";
+                } else {
+                    // Sucesso Absoluto!
+                    empresaInput.value = ''; 
+                    btnGerar.innerText = "SALVO COM SUCESSO!";
+                    btnGerar.classList.replace('bg-white', 'bg-green-500');
+                    
+                    setTimeout(() => {
+                        btnGerar.disabled = false;
+                        btnGerar.innerText = "Executar Gerador";
+                        btnGerar.classList.replace('bg-green-500', 'bg-white');
+                    }, 3000);
+                }
+            } catch (err) {
+                console.error("Erro no JavaScript:", err);
+                alert("Erro! Verifique se você colocou a URL correta do Supabase no código.");
                 btnGerar.disabled = false;
                 btnGerar.innerText = "TENTAR NOVAMENTE";
-            } else {
-                // Sucesso Absoluto!
-                empresaInput.value = ''; 
-                btnGerar.innerText = "SALVO COM SUCESSO!";
-                btnGerar.classList.replace('bg-white', 'bg-green-500');
-                
-                setTimeout(() => {
-                    btnGerar.disabled = false;
-                    btnGerar.innerText = "Executar Gerador";
-                    btnGerar.classList.replace('bg-green-500', 'bg-white');
-                }, 3000);
             }
         }
     }, 30);
@@ -212,4 +221,5 @@ window.onload = function() {
 </body>
 
 </html>
+
 
