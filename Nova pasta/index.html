@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.R.B.O. | Inteligência Ambiental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap');
+        body { font-family: 'Manrope', sans-serif; background-color: #0B0F19; color: #F1F5F9; }
+        .glass { background: rgba(11, 15, 25, 0.7); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .gradient-text { background: linear-gradient(135deg, #34D399, #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-premium { background: linear-gradient(180deg, rgba(30,41,59,0.5) 0%, rgba(15,23,42,0.5) 100%); border: 1px solid rgba(52,211,153,0.1); box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-emerald-500 selection:text-white">
+
+    <nav class="fixed w-full z-50 glass transition-all">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-3xl font-extrabold tracking-tighter">A.R.B.O<span class="text-emerald-500">.</span></div>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold text-slate-300">
+                <a href="#solucao" class="hover:text-emerald-400 transition">O Dispositivo</a>
+                <a href="#tecnologia" class="hover:text-emerald-400 transition">Tecnologia</a>
+                <a href="#esg" class="hover:text-emerald-400 transition">Impacto ESG</a>
+            </div>
+            <button onclick="document.getElementById('modalLogin').classList.remove('hidden')" class="bg-emerald-600/10 border border-emerald-500 text-emerald-400 px-6 py-2 rounded-lg font-bold hover:bg-emerald-600 hover:text-white transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                Acesso Corporativo
+            </button>
+        </div>
+    </nav>
+
+    <header class="relative pt-40 pb-32 flex items-center min-h-screen overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-600/20 rounded-full blur-[120px] -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center w-full z-10">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <span class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4 block">Hardware as a Service</span>
+                <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight mb-6">
+                    Natureza e Dados em um <span class="gradient-text">só dispositivo.</span>
+                </h1>
+                <p class="text-lg text-slate-400 mb-10 max-w-lg leading-relaxed">
+                    Reduza o estresse da sua equipe e corte custos de ar-condicionado de forma autônoma. O primeiro nódulo IoT de biofilia inteligente focado em Governança ESG.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#solucao" class="bg-emerald-500 text-slate-950 px-8 py-4 rounded-xl font-extrabold hover:bg-emerald-400 hover:scale-105 transition-all shadow-lg shadow-emerald-500/25">Descobrir como</a>
+                </div>
+            </div>
+            <div data-aos="zoom-in-up" data-aos-duration="1200" class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-400 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                <img src="https://images.unsplash.com/photo-1592150621744-aca64f48394a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vaso A.R.B.O." class="relative rounded-2xl border border-slate-700/50 w-full object-cover h-[600px] grayscale-[20%] group-hover:grayscale-0 transition-all duration-700">
+            </div>
+        </div>
+    </header>
+
+    <section id="solucao" class="py-32 bg-[#080B13]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="text-4xl font-extrabold mb-4">Autonomia total, <span class="text-emerald-400">Zero Configuração</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Desenvolvido com tecnologia ESP32, o A.R.B.O. é um sistema Plug & Play que converte ambientes físicos em dashboards estratégicos em tempo real.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div data-aos="fade-up" data-aos-delay="100" class="card-premium p-10 rounded-2xl text-center group">
+                    <div class="w-16 h-16 bg-slate-800 rounded-2xl mx-auto mb-6 flex items-center justify-center border border-slate-700 group-hover:border-emerald-500 transition-colors">
+                        <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Eficiência Energética</h3>
+                    <p class="text-slate-400 text-sm">Monitoramento térmico autônomo. Identifica desperdícios do ar-condicionado e calcula o ROI automaticamente no seu painel.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" class="card-premium p-10 rounded-2xl text-center group">
+                    <div class="w-16 h-16 bg-slate-800 rounded-2xl mx-auto mb-6 flex items-center justify-center border border-slate-700 group-hover:border-emerald-500 transition-colors">
+                        <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Prevenção de Burnout</h3>
+                    <p class="text-slate-400 text-sm">A interface OLED gamificada e a presença da biofilia reduzem níveis de estresse, gerando um mapa de calor humano para o RH.</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300" class="card-premium p-10 rounded-2xl text-center group">
+                    <div class="w-16 h-16 bg-slate-800 rounded-2xl mx-auto mb-6 flex items-center justify-center border border-slate-700 group-hover:border-emerald-500 transition-colors">
+                        <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Compliance ESG</h3>
+                    <p class="text-slate-400 text-sm">Geração contínua de dados ambientais formatados para relatórios de sustentabilidade. Mostre ao mercado sua governança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#05080f] border-t border-slate-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 mb-12">
+            <div class="col-span-2">
+                <div class="text-2xl font-extrabold tracking-tighter mb-4">A.R.B.O<span class="text-emerald-500">.</span></div>
+                <p class="text-slate-500 text-sm max-w-sm">Ambiente Regulado para Bem-estar & Otimização. Soluções em IoT e Biofilia para o mercado corporativo do futuro.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Produto</h4>
+                <ul class="space-y-2 text-slate-500 text-sm">
+                    <li><a href="#" class="hover:text-emerald-400">Especificações Técnicas</a></li>
+                    <li><a href="#" class="hover:text-emerald-400">Portal do Cliente</a></li>
+                    <li><a href="#" class="hover:text-emerald-400">Painel Admin</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Contato</h4>
+                <ul class="space-y-2 text-slate-500 text-sm">
+                    <li>Manaus, Amazonas - AM</li>
+                    <li>contato@arbo.tech</li>
+                    <li>Projeto Centelha 3</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 text-center text-slate-600 text-xs">
+            &copy; 2026 A.R.B.O. Systems. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <div id="modalLogin" class="fixed inset-0 z-[100] hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="document.getElementById('modalLogin').classList.add('hidden')"></div>
+        
+        <div class="relative bg-[#0F1423] p-10 rounded-2xl w-full max-w-md border border-slate-700/50 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-100 transition-transform">
+            <button onclick="document.getElementById('modalLogin').classList.add('hidden')" class="absolute top-4 right-4 text-slate-500 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
+                    <svg class="w-8 h-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-extrabold text-white tracking-tight">Portal Corporativo</h3>
+                <p class="text-sm text-slate-400 mt-2">Acesso seguro ao seu ecossistema IoT.</p>
+            </div>
+
+            <div class="mb-6 relative">
+                <input type="text" id="tokenInput" placeholder="Chave de Acesso" 
+                       class="w-full bg-[#080B13] border border-slate-700 rounded-xl px-4 py-4 text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-mono tracking-wider text-center">
+            </div>
+            
+            <button onclick="validarToken()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]">
+                AUTENTICAR
+            </button>
+            
+            <p id="erroLogin" class="text-red-400 text-xs mt-4 text-center hidden font-semibold">Chave de acesso inválida ou expirada.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializa animações
+        AOS.init({ once: true });
+
+        // Lógica de Redirecionamento
+        function validarToken() {
+            const token = document.getElementById('tokenInput').value;
+            if(token.trim() !== "") {
+                // Em produção, isso bateria no banco de dados. 
+                // Aqui, redireciona para a página do Dashboard.
+                window.location.href = 'dashboard.html';
+            } else {
+                document.getElementById('erroLogin').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
