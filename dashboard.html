@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A.R.B.O. | Enterprise Dashboard</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
@@ -79,7 +82,7 @@
                     <div class="glass-panel p-6">
                         <h3 class="text-zinc-500 text-[10px] font-bold uppercase tracking-widest border-b border-zinc-800 pb-2 mb-4">Índice de Conforto Térmico</h3>
                         <div class="text-3xl font-black text-white flex items-center gap-3" id="display-conforto">
-                            AGUARDANDO <span class="text-sm bg-zinc-800 text-zinc-400 px-2 py-1 rounded">--°C</span>
+                            AGUARDANDO <span class="text-sm bg-zinc-800 text-zinc-500 px-2 py-1 rounded">--°C</span>
                         </div>
                         <div class="w-full bg-zinc-800 h-1 mt-4"><div id="barra-conforto" class="h-full bg-zinc-600" style="width: 0%"></div></div>
                     </div>
@@ -116,7 +119,8 @@
                 <div class="grid lg:grid-cols-3 gap-4">
                     <div class="lg:col-span-2 glass-panel p-6 flex flex-col">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-sm font-bold text-white uppercase tracking-widest">Curva de Consumo (KWh)</h3>
+                            <h3 class="text-sm font-bold text-white uppercase tracking-widest">Curva de Consumo Térmico (Tempo Real)</h3>
+                            
                             <div class="flex gap-2">
                                 <button id="btn-sem-arbo" onclick="toggleDataset(0, 'btn-sem-arbo')" class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 border border-zinc-700 bg-zinc-800 text-white transition-all">S/ A.R.B.O.</button>
                                 <button id="btn-com-arbo" onclick="toggleDataset(1, 'btn-com-arbo')" class="text-[10px] font-bold uppercase tracking-widest px-3 py-1 border border-green-500 bg-green-500/20 text-green-400 transition-all">C/ A.R.B.O.</button>
@@ -133,15 +137,9 @@
                             <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                         </div>
-                        <div class="p-4 font-mono text-xs bg-black flex-1 text-green-500 leading-relaxed">
+                        <div class="p-4 font-mono text-xs bg-black flex-1 text-green-500 leading-relaxed" id="terminal-ia">
                             <p class="text-zinc-500 mb-2">arbo-ai-engine v2.0</p>
-                            <p>> Coletando dados térmicos...</p>
-                            <p>> Analisando Setor Financeiro.</p>
-                            <p class="text-yellow-400 mt-2">! ANOMALIA DETECTADA:</p>
-                            <p class="text-white">Temperatura lida: 19°C (Muito frio).</p>
-                            <p class="text-white">Setpoint HVAC: 24°C.</p>
-                            <p class="text-red-400 mt-2">> Desperdício ativo de KWh.</p>
-                            <p class="text-blue-400 mt-2">> Ação autônoma: Emitindo alerta para manutenção e regulagem do termostato.</p>
+                            <p>> Aguardando pacote de dados...</p>
                             <span class="animate-pulse inline-block mt-2">_</span>
                         </div>
                     </div>
@@ -171,12 +169,12 @@
 
                     <div class="grid grid-cols-3 gap-4 mb-16">
                         <div class="bg-black border border-zinc-800 p-6">
-                            <span class="block text-white font-black text-5xl mb-2">450</span>
+                            <span class="block text-white font-black text-5xl mb-2" id="esg-co2">450.0</span>
                             <span class="text-green-500 text-[10px] font-bold uppercase tracking-widest">Kg de CO2 Evitados</span>
                         </div>
                         <div class="bg-black border border-zinc-800 p-6">
-                            <span class="block text-white font-black text-5xl mb-2">1.2M</span>
-                            <span class="text-green-500 text-[10px] font-bold uppercase tracking-widest">KWh Economizados</span>
+                            <span class="block text-white font-black text-5xl mb-2" id="esg-kwh">1.200</span>
+                            <span class="text-green-500 text-[10px] font-bold uppercase tracking-widest">MWh Economizados</span>
                         </div>
                         <div class="bg-black border border-zinc-800 p-6">
                             <span class="block text-white font-black text-5xl mb-2">98%</span>
@@ -202,7 +200,7 @@
 
     <script>
         // 1. CONEXÃO COM O CÉREBRO (SUPABASE)
-        const supabaseUrl = 'https://zbnpwicdgobxkvesgayr.supabase.co'; // <--- COLE SUA URL AQUI!
+        const supabaseUrl = 'https://zbnpwicdgobxkvesgayr.supabase.co'; // <--- COLE SUA URL AQUI!!!
         const supabaseKey = 'sb_publishable_Bw_NeyC1z_bHKnKOYjns0w_wAiAw5Lc';
         const bancoDeDados = supabase.createClient(supabaseUrl, supabaseKey);
 
@@ -216,16 +214,16 @@
             elementoBotao.className = 'nav-btn w-full flex items-center gap-3 px-4 py-3 rounded bg-green-500 text-black font-bold transition-all';
         }
 
-        // 3. GRÁFICO (MANTIDO)
+        // 3. INICIALIZAÇÃO DO GRÁFICO (ESTADO ZERO)
         const ctx = document.getElementById('graficoEnergia').getContext('2d');
         const chartEnergia = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1h', '2h', '3h', '4h', '5h', 'Agora'],
+                labels: ['-', '-', '-', '-', '-', '-'],
                 datasets: [
                     {
-                        label: 'Desperdício Estimado',
-                        data: [120, 130, 125, 140, 135, 110],
+                        label: 'Desperdício Sem Controle (°C)',
+                        data: [0, 0, 0, 0, 0, 0],
                         borderColor: '#52525b',
                         borderDash: [5, 5],
                         borderWidth: 2,
@@ -233,8 +231,8 @@
                         pointRadius: 0
                     }, 
                     {
-                        label: 'Consumo Pós-A.R.B.O.',
-                        data: [90, 95, 88, 92, 90, 80],
+                        label: 'Sala Otimizada A.R.B.O. (°C)',
+                        data: [0, 0, 0, 0, 0, 0],
                         borderColor: '#22c55e',
                         backgroundColor: 'rgba(34, 197, 94, 0.1)',
                         borderWidth: 3,
@@ -281,78 +279,120 @@
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
             pdf.addImage(imgData, 'PNG', 0, 10, pdfWidth, pdfHeight);
-            pdf.save("A.R.B.O_Certificado.pdf");
+            pdf.save("A.R.B.O_Certificado_Denso.pdf");
             btn.innerHTML = "Baixar Certificado Oficial";
         }
 
         // =======================================================
-        // 5. O MOTOR DE ATUALIZAÇÃO EM TEMPO REAL DA ESP32
+        // 5. O MOTOR DE ATUALIZAÇÃO EM TEMPO REAL (NUVEM -> SITE)
         // =======================================================
         async function puxarDadosDaPlaca() {
             try {
-                // Vai no Supabase puxar a última linha de temperatura
+                // Puxa as últimas 6 leituras da placa
                 const { data, error } = await bancoDeDados
                     .from('logs_sensores')
                     .select('*')
                     .order('registrado_em', { ascending: false })
-                    .limit(1);
+                    .limit(6);
 
                 if (error) throw error;
 
                 if (data && data.length > 0) {
-                    const leituraAtual = data[0];
+                    const leituraAtual = data[0]; // A leitura mais recente
                     const temp = leituraAtual.temperatura;
                     const umid = leituraAtual.umidade;
-                    const mac = leituraAtual.mac_address.substring(12); // Pega final do MAC
+                    const mac = leituraAtual.mac_address.substring(12);
                     
-                    atualizarPainelVisual(temp, umid, mac);
+                    atualizarPainelVisual(temp, umid, mac, data);
                 }
             } catch (err) {
-                console.error("Erro ao puxar dados:", err);
+                console.error("Erro ao puxar dados da nuvem:", err);
             }
         }
 
-        function atualizarPainelVisual(temp, umid, mac) {
-            // Bolinha verde de Frota online
+        // Variáveis para simular o acúmulo financeiro e ESG durante a apresentação
+        let co2Acumulado = 450.0;
+        let kwhAcumulado = 1.200;
+
+        function atualizarPainelVisual(temp, umid, mac, historico) {
+            // 1. Frota Online
             document.getElementById('display-frota').innerHTML = `1 <span class="relative flex h-4 w-4"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span></span>`;
             
-            // Lógica do Termostato e Burnout
+            // 2. Termostato e Status de Conforto
             let confortoStatus = "IDEAL";
             let corHex = "text-green-500";
             let bgCor = "bg-green-500";
             
             if (temp > 26) { confortoStatus = "ALERTA (CALOR)"; corHex = "text-red-500"; bgCor = "bg-red-500"; }
-            else if (temp < 20) { confortoStatus = "ALERTA (FRIO)"; corHex = "text-blue-500"; bgCor = "bg-blue-500"; }
+            else if (temp < 22) { confortoStatus = "ALERTA (FRIO)"; corHex = "text-blue-500"; bgCor = "bg-blue-500"; }
 
             document.getElementById('display-conforto').innerHTML = `${confortoStatus} <span class="text-sm bg-zinc-800 ${corHex} px-2 py-1 rounded">${temp.toFixed(1)}°C</span>`;
-            document.getElementById('barra-conforto').style.width = '100%';
             document.getElementById('barra-conforto').className = `h-full transition-all duration-1000 ${bgCor}`;
+            document.getElementById('barra-conforto').style.width = '100%';
 
-            // A Mágica do Mapa (Radar cria uma mancha baseada na temperatura real!)
+            // 3. Radar Térmico (Muda de cor com a temperatura)
             const mapaContainer = document.getElementById('mapa-termico');
-            let corMapa = temp > 26 ? "red" : (temp < 20 ? "blue" : "green");
+            let corMapa = temp > 26 ? "red" : (temp < 22 ? "blue" : "green");
             
             mapaContainer.innerHTML = `
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-${corMapa}-500/20 blur-[50px] rounded-full pointer-events-none transition-all duration-1000"></div>
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border border-${corMapa}-500/50 bg-black/80 px-4 py-2 flex flex-col items-center shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    <span class="text-[10px] font-bold text-white uppercase tracking-widest">VASO A.R.B.O. (ID: ${mac})</span>
+                    <span class="text-[10px] font-bold text-white uppercase tracking-widest">VASO A.R.B.O. (MAC: ${mac})</span>
                     <span class="text-xl font-mono text-${corMapa}-500 font-bold mt-1">${temp.toFixed(1)}°C | ${umid.toFixed(0)}% UR</span>
                     <span class="text-[9px] text-green-500 mt-1 uppercase flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Sincronizado</span>
                 </div>
             `;
 
-            // Economia rolando solta
-            if(temp >= 20 && temp <= 26) {
-                document.getElementById('display-economia').innerHTML = 'R$ 142<span class="text-lg text-zinc-500">,50</span>';
+            // 4. Atualiza o Gráfico com o Histórico Real
+            const historicoCronologico = [...historico].reverse(); // Inverte para desenhar do mais antigo para o mais novo
+            
+            // Define as horas no eixo X do gráfico
+            chartEnergia.data.labels = historicoCronologico.map(d => {
+                let dataHora = new Date(d.registrado_em);
+                return dataHora.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+            });
+            
+            // Linha Verde: Temperatura real lida pela placa
+            chartEnergia.data.datasets[1].data = historicoCronologico.map(d => d.temperatura);
+            
+            // Linha Cinza: Simula o cenário sem controle (ex: ar condicionado forçando a barra 3 graus mais frio)
+            chartEnergia.data.datasets[0].data = historicoCronologico.map(d => d.temperatura - 3.5);
+            
+            chartEnergia.update();
+
+            // 5. Terminal Inteligente
+            let textoIA = `<p class="text-zinc-500 mb-2">arbo-ai-engine v2.0</p>`;
+            textoIA += `<p>> Analisando pacote: Temp ${temp.toFixed(1)}°C | UR ${umid.toFixed(0)}%</p>`;
+            
+            if (temp > 26) {
+                textoIA += `<p class="text-red-400 mt-2">! ALERTA DE RISCO TÉRMICO !</p><p class="text-white">Ação: Recomendando redução do Setpoint do HVAC.</p>`;
+            } else if (temp < 22) {
+                textoIA += `<p class="text-blue-400 mt-2">! DESPERDÍCIO ENERGÉTICO !</p><p class="text-white">Ação: Sugerindo aumento do Setpoint para adequação ESG.</p>`;
+            } else {
+                textoIA += `<p class="text-green-400 mt-2">> AMBIENTE OTIMIZADO.</p><p class="text-white">Status: Acumulando créditos de carbono.</p>`;
+            }
+            textoIA += `<span class="animate-pulse inline-block mt-2">_</span>`;
+            document.getElementById('terminal-ia').innerHTML = textoIA;
+
+            // 6. Gamificação Financeira e ESG (Sobe se a temperatura for ideal)
+            if(temp >= 22 && temp <= 26) {
+                co2Acumulado += 0.2;
+                kwhAcumulado += 0.005;
+                
+                document.getElementById('esg-co2').innerText = co2Acumulado.toFixed(1);
+                document.getElementById('esg-kwh').innerText = kwhAcumulado.toFixed(3);
+                
+                // Economia Financeira baseada no CO2
+                let reais = (co2Acumulado * 1.5).toFixed(2).replace('.', ',');
+                document.getElementById('display-economia').innerHTML = `R$ ${reais}<span class="text-lg text-zinc-500"></span>`;
             }
         }
 
         // Liga o motor quando o site carrega
         window.onload = function() {
             puxarDadosDaPlaca(); // Puxa agora
-            setInterval(puxarDadosDaPlaca, 3000); // Fica varrendo o banco a cada 3 segundos!
+            setInterval(puxarDadosDaPlaca, 3000); // Fica varrendo o banco de dados a cada 3 segundos!
         };
     </script>
 </body>
 </html>
-
